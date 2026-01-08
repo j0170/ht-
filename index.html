@@ -1030,8 +1030,8 @@ d) Daraxt chuqurligini aniqlash uchun
 <script>
 const raw = document.getElementById("data").innerText.trim();
 
-// 1., 2., 3. orqali savollarni ajratamiz
-const questions = raw.split(/\n(?=\d+\.)/);
+// savollarni qator-qator ajratamiz: har bir bo‘sh qator yangi savol
+const questions = raw.split(/\n\s*\n/);
 
 const list = document.getElementById("list");
 const input = document.getElementById("search");
@@ -1053,7 +1053,7 @@ input.addEventListener("input", () => {
   const key = input.value.toLowerCase().trim();
 
   if (key === "") {
-    show(questions); // tozalansa hammasi chiqadi
+    show(questions);
     return;
   }
 
