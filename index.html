@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <title>HEMIS</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Qidiruv input uslubi */
+        #searchInput {
+            padding: 8px;
+            width: 100%;
+            max-width: 400px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            display: block;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .question {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
 
@@ -15,6 +34,9 @@
 <!-- Testlar joyi -->
 <div class="content">
     <h2>Sessiya testlari</h2>
+
+    <!-- Qidiruv inputi qo‘shildi -->
+    <input type="text" id="searchInput" placeholder="Savolni qidir...">
 
     <div class="question">
         <p><b>1. HTML nimani anglatadi?</b></p>
@@ -29,11 +51,29 @@
         <p>B) Dizayn berish ✅</p>
         <p>C) Server boshqarish</p>
     </div>
-	<h3>Test fayli</h3>
-	<p>Faylni korish yoki yuklab olish uchun:</p>
-	<a href="5-mavzu Axborot izlash tizimlarida indekslar.docx" target="_blank"> 5-mavzu </a>
+
+    <h3>Test fayli</h3>
+    <p>Faylni ko‘rish yoki yuklab olish uchun:</p>
+    <a href="5-mavzu Axborot izlash tizimlarida indekslar.docx" target="_blank">5-mavzu</a>
 
 </div>
+
+<!-- Qidiruv JavaScript -->
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const questions = document.querySelectorAll('.question');
+
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase(); // kichik harfga o‘tkazamiz
+        questions.forEach(q => {
+            if (q.textContent.toLowerCase().includes(query)) {
+                q.style.display = ''; // mos kelsa ko‘rsat
+            } else {
+                q.style.display = 'none'; // mos kelmasa yashir
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
