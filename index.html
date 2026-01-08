@@ -3,13 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Qidiruv</title>
+  <style>
+    #allText {
+      white-space: pre-wrap; /* yangi qatorlarni saqlaydi */
+      margin-top: 15px;
+    }
+  </style>
 </head>
 <body>
+
+<h2>Sessiya testlari</h2>
+
 <input type="text" id="searchInput" placeholder="Qidir..." style="width:100%;padding:8px;">
 
 <hr>
 
-<!-- HAMMA NARSA SHU YERGA -->
 <div id="allText">
 1.Axborot izlash jarayonida qanday asosiy bosqichlar mavjud?
 #a) Maqsadni belgilash
@@ -1021,20 +1029,21 @@ d) Daraxt chuqurligini aniqlash uchun
 <script>
 const input = document.getElementById("searchInput");
 const content = document.getElementById("allText");
-const originalText = content.innerHTML;
+const originalText = content.textContent;
 
 input.addEventListener("input", function () {
-  const text = this.value.trim();
-  if (text === "") {
-    content.innerHTML = originalText;
+  const q = this.value.trim().toLowerCase();
+
+  if (q === "") {
+    content.textContent = originalText;
     return;
   }
 
-  const regex = new RegExp(text, "gi");
-  content.innerHTML = originalText.replace(
-    regex,
-    match => <mark>${match}</mark>
-  );
+  if (originalText.toLowerCase().includes(q)) {
+    content.textContent = originalText;
+  } else {
+    content.textContent = "Hech narsa topilmadi";
+  }
 });
 </script>
 
