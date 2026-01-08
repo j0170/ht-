@@ -17,6 +17,7 @@
 
 <hr>
 
+<!-- HAMMA TESTLARNI BITTA JOYGA JOYLAYSIZ -->
 <div id="data" style="display:none;">
 1.Axborot izlash jarayonida qanday asosiy bosqichlar mavjud?
 #a) Maqsadni belgilash
@@ -1028,19 +1029,22 @@ d) Daraxt chuqurligini aniqlash uchun
 <div id="list"></div>
 
 <script>
+// Raw matnni olish
 const raw = document.getElementById("data").textContent.trim();
 
-// Har bir savolni "raqam." orqali ajratamiz
-const questions = raw.split(/\d+\.\s/).filter(s => s.trim() !== "");
+// Har bir savolni raqam bilan boshlanishiga qarab ajratamiz
+const questions = [];
+const regex = /(\d+[\.\)]?.*?)(?=(\d+[\.\)]?|$))/gs;
 
-// Split regex raqamni olib tashlaydi, shuning uchun qayta qo‘shamiz
-for (let i = 0; i < questions.length; i++) {
-  questions[i] = (i+1) + ". " + questions[i].trim();
+let match;
+while ((match = regex.exec(raw)) !== null) {
+  questions.push(match[1].trim());
 }
 
 const list = document.getElementById("list");
 const input = document.getElementById("search");
 
+// Savollarni ekranga chiqaradigan funksiya
 function show(arr) {
   list.innerHTML = "";
   arr.forEach(q => {
@@ -1058,8 +1062,8 @@ show(questions);
 input.addEventListener("input", () => {
   const key = input.value.trim().toLowerCase();
   
-  if (key === "") {
-    show(questions); // Qidiruv bo‘sh bo‘lsa hamma savol chiqadi
+  if (!key) {
+    show(questions);
     return;
   }
 
