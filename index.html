@@ -1028,30 +1028,32 @@ d) Daraxt chuqurligini aniqlash uchun
 <div id="list"></div>
 
 <script>
-const raw = document.getElementById("data").innerText.trim();
+const raw = document.getElementById("data").textContent.trim();
 
-// bo‘sh qator bilan savollarni ajratish
-const questions = raw.split(/\r?\n\s*\r?\n/); // \r?\n qo‘shildi
+// Har bir savolni bo‘sh qator bilan ajratish
+const questions = raw.split(/\n\s*\n/);
 
 const list = document.getElementById("list");
 const input = document.getElementById("search");
 
+// Savollarni ekranga chiqaradigan funksiya
 function show(arr) {
   list.innerHTML = "";
   arr.forEach(q => {
     const d = document.createElement("div");
     d.className = "question";
-    d.innerText = q;
+    d.textContent = q; // innerText o‘rniga textContent
     list.appendChild(d);
   });
 }
 
-// boshida hammasi chiqadi
+// Boshlang‘ich holat
 show(questions);
 
+// Qidiruv ishlashi
 input.addEventListener("input", () => {
-  const key = input.value.toLowerCase().trim();
-
+  const key = input.value.trim().toLowerCase();
+  
   if (key === "") {
     show(questions);
     return;
