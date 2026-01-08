@@ -1030,24 +1030,28 @@ d) Daraxt chuqurligini aniqlash uchun
 <script>
 const raw = document.getElementById("data").textContent.trim();
 
-// Har bir savolni bo‘sh qator bilan ajratish
-const questions = raw.split(/\n\s*\n/);
+// Har bir savolni "raqam." orqali ajratamiz
+const questions = raw.split(/\d+\.\s/).filter(s => s.trim() !== "");
+
+// Split regex raqamni olib tashlaydi, shuning uchun qayta qo‘shamiz
+for (let i = 0; i < questions.length; i++) {
+  questions[i] = (i+1) + ". " + questions[i].trim();
+}
 
 const list = document.getElementById("list");
 const input = document.getElementById("search");
 
-// Savollarni ekranga chiqaradigan funksiya
 function show(arr) {
   list.innerHTML = "";
   arr.forEach(q => {
-    const d = document.createElement("div");
-    d.className = "question";
-    d.textContent = q; // innerText o‘rniga textContent
-    list.appendChild(d);
+    const div = document.createElement("div");
+    div.className = "question";
+    div.textContent = q;
+    list.appendChild(div);
   });
 }
 
-// Boshlang‘ich holat
+// Boshlanishida hammasi chiqadi
 show(questions);
 
 // Qidiruv ishlashi
@@ -1055,7 +1059,7 @@ input.addEventListener("input", () => {
   const key = input.value.trim().toLowerCase();
   
   if (key === "") {
-    show(questions);
+    show(questions); // Qidiruv bo‘sh bo‘lsa hamma savol chiqadi
     return;
   }
 
