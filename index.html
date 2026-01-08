@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <title>Test qidiruv</title>
 <style>
-  body { font-family: Arial; }
+  body { font-family: Arial; padding: 20px; }
+  #search { width: 100%; padding: 8px; margin-bottom: 10px; }
   .question { margin-bottom: 15px; white-space: pre-wrap; }
 </style>
 </head>
@@ -12,11 +13,11 @@
 
 <h3>Testlar</h3>
 
-<input id="search" type="text" placeholder="Qidir..." style="width:100%;padding:8px;">
+<input id="search" type="text" placeholder="Qidir...">
 
 <hr>
 
-<!-- HAMMA TESTLARNI BITTA JOYGA QO‘YASIZ -->
+<!-- HAMMA SAVOLLARNI BU YERGA JOYLAYSIZ -->
 <div id="data" style="display:none;">
 1.Axborot izlash jarayonida qanday asosiy bosqichlar mavjud?
 #a) Maqsadni belgilash
@@ -1029,38 +1030,37 @@ d) Daraxt chuqurligini aniqlash uchun
 
 <script>
 const raw = document.getElementById("data").innerText.trim();
-
-// savollarni qator-qator ajratamiz: har bir bo‘sh qator yangi savol
-const questions = raw.split(/\n\s*\n/);
-
+const questions = raw.split(/\n\s*\n/); // Bo‘sh qator bilan savollarni ajratish
 const list = document.getElementById("list");
 const input = document.getElementById("search");
 
+// Savollarni ekranga chiqaradigan funksiya
 function show(arr) {
   list.innerHTML = "";
   arr.forEach(q => {
-    const d = document.createElement("div");
-    d.className = "question";
-    d.innerText = q;
-    list.appendChild(d);
+    const div = document.createElement("div");
+    div.className = "question";
+    div.innerText = q;
+    list.appendChild(div);
   });
 }
 
-// boshida hammasi chiqadi
+// Boshlanishida hammasi chiqadi
 show(questions);
 
+// Qidiruv ishlashi
 input.addEventListener("input", () => {
-  const key = input.value.toLowerCase().trim();
-
+  const key = input.value.trim().toLowerCase();
+  
   if (key === "") {
-    show(questions);
+    show(questions); // qidiruv bo‘sh bo‘lsa hamma savol chiqadi
     return;
   }
-
+  
   const filtered = questions.filter(q =>
     q.toLowerCase().includes(key)
   );
-
+  
   show(filtered);
 });
 </script>
