@@ -4,21 +4,19 @@
 <meta charset="UTF-8">
 <title>Test qidiruv</title>
 <style>
-  body { font-family: Arial; padding: 20px; }
-  #search { width: 100%; padding: 8px; margin-bottom: 10px; }
+  body { font-family: Arial; }
   .question { margin-bottom: 15px; white-space: pre-wrap; }
-  mark { background: yellow; }
 </style>
 </head>
 <body>
 
 <h3>Testlar</h3>
 
-<input id="search" type="text" placeholder="Qidir...">
+<input id="search" type="text" placeholder="Qidir..." style="width:100%;padding:8px;">
 
 <hr>
 
-<!-- Savollarni shu yerga joylang -->
+<!-- HAMMA TESTLARNI BITTA JOYGA QO‘YASIZ -->
 <div id="data" style="display:none;">
 1.Axborot izlash jarayonida qanday asosiy bosqichlar mavjud?
 #a) Maqsadni belgilash
@@ -1031,36 +1029,28 @@ d) Daraxt chuqurligini aniqlash uchun
 
 <script>
 const raw = document.getElementById("data").innerText.trim();
-const questions = raw.split(/\n\s*\n/); // har bir bo‘sh qator yangi savol
+
+// savollarni qator-qator ajratamiz: har bir bo‘sh qator yangi savol
+const questions = raw.split(/\n\s*\n/);
+
 const list = document.getElementById("list");
 const input = document.getElementById("search");
 
-function show(arr, highlight="") {
+function show(arr) {
   list.innerHTML = "";
   arr.forEach(q => {
-    const div = document.createElement("div");
-    div.className = "question";
-    
-    if (highlight) {
-      const regex = new RegExp(highlight, "gi");
-      div.innerHTML = q.replace(regex, m => `<mark>${m}</mark>`);
-    } else {
-      div.textContent = q;
-    }
-    list.appendChild(div);
+    const d = document.createElement("div");
+    d.className = "question";
+    d.innerText = q;
+    list.appendChild(d);
   });
-
-  // Auto-scroll birinchi topilgan savolga
-  if (highlight && arr.length > 0) {
-    list.firstChild.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
 }
 
-// Boshlang‘ich holat — hammasi chiqadi
+// boshida hammasi chiqadi
 show(questions);
 
 input.addEventListener("input", () => {
-  const key = input.value.trim().toLowerCase();
+  const key = input.value.toLowerCase().trim();
 
   if (key === "") {
     show(questions);
@@ -1071,7 +1061,7 @@ input.addEventListener("input", () => {
     q.toLowerCase().includes(key)
   );
 
-  show(filtered, key);
+  show(filtered);
 });
 </script>
 
