@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <title>Test qidiruv</title>
   <style>
-    #allText {
+    #output {
       white-space: pre-wrap;
       margin-top: 15px;
       font-family: Arial, sans-serif;
     }
-    mark {
-      background: yellow;
+    .question {
+      margin-bottom: 15px;
     }
   </style>
 </head>
@@ -27,7 +27,8 @@
 
 <hr>
 
-<div id="allText">
+<!-- 🔴 HAMMA SAVOLLARNI SHU YERGA BITTA QILIB QO‘YASIZ -->
+<textarea id="source" style="display:none;">
 1.Axborot izlash jarayonida qanday asosiy bosqichlar mavjud?
 #a) Maqsadni belgilash
 b) Axborotni tahlil qilish
@@ -1033,35 +1034,46 @@ a) Model aniqligini aniqlash uchun
 c) Overfittingni oldini olish uchun
 d) Daraxt chuqurligini aniqlash uchun
 
-</div>
+</textarea>
 
-<p id="info" style="color:red;"></p>
+<!-- NATIJA SHU YERDA CHIQADI -->
+<div id="output"></div>
 
 <script>
+const source = document.getElementById("source").value.trim();
+
+// Savollarni bo‘sh qatorlar orqali ajratamiz
+const questions = source.split(/\n\s*\n/);
+
+const output = document.getElementById("output");
 const input = document.getElementById("searchInput");
-const box = document.getElementById("allText");
-const info = document.getElementById("info");
-const original = box.textContent;
+
+function render(list) {
+  output.innerHTML = "";
+  list.forEach(q => {
+    const div = document.createElement("div");
+    div.className = "question";
+    div.textContent = q;
+    output.appendChild(div);
+  });
+}
+
+// Boshlang‘ich holat — hammasi chiqadi
+render(questions);
 
 input.addEventListener("input", function () {
-  const q = this.value.trim();
+  const key = this.value.trim().toLowerCase();
 
-  if (q === "") {
-    box.textContent = original;
-    info.textContent = "";
+  if (key === "") {
+    render(questions);
     return;
   }
 
-  if (!original.toLowerCase().includes(q.toLowerCase())) {
-    box.textContent = original;
-    info.textContent = "Hech narsa topilmadi";
-    return;
-  }
+  const filtered = questions.filter(q =>
+    q.toLowerCase().includes(key)
+  );
 
-  info.textContent = "";
-
-  const regex = new RegExp(q, "gi");
-  box.innerHTML = original.replace(regex, m => `<mark>${m}</mark>`);
+  render(filtered);
 });
 </script>
 
