@@ -1,34 +1,23 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <title>Test qidiruv</title>
-  <style>
-    #output {
-      white-space: pre-wrap;
-      margin-top: 15px;
-      font-family: Arial, sans-serif;
-    }
-    .question {
-      margin-bottom: 15px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Test qidiruv</title>
+<style>
+  body { font-family: Arial; }
+  .question { margin-bottom: 15px; white-space: pre-wrap; }
+</style>
 </head>
 <body>
 
-<h2>Sessiya testlari</h2>
+<h3>Testlar</h3>
 
-<input
-  type="text"
-  id="searchInput"
-  placeholder="Qidir..."
-  style="width:100%;padding:8px;"
->
+<input id="search" type="text" placeholder="Qidir..." style="width:100%;padding:8px;">
 
 <hr>
 
-<!-- 🔴 HAMMA SAVOLLARNI SHU YERGA BITTA QILIB QO‘YASIZ -->
-<textarea id="source" style="display:none;">
+<!-- HAMMA TESTLARNI BITTA JOYGA QO‘YASIZ -->
+<div id="data" style="display:none;">
 1.Axborot izlash jarayonida qanday asosiy bosqichlar mavjud?
 #a) Maqsadni belgilash
 b) Axborotni tahlil qilish
@@ -1034,38 +1023,37 @@ a) Model aniqligini aniqlash uchun
 c) Overfittingni oldini olish uchun
 d) Daraxt chuqurligini aniqlash uchun
 
-</textarea>
+</div>
 
-<!-- NATIJA SHU YERDA CHIQADI -->
-<div id="output"></div>
+<div id="list"></div>
 
 <script>
-const source = document.getElementById("source").value.trim();
+const raw = document.getElementById("data").innerText.trim();
 
-// Savollarni bo‘sh qatorlar orqali ajratamiz
-const questions = source.split(/\n\s*\n/);
+// 1., 2., 3. orqali savollarni ajratamiz
+const questions = raw.split(/\n(?=\d+\.)/);
 
-const output = document.getElementById("output");
-const input = document.getElementById("searchInput");
+const list = document.getElementById("list");
+const input = document.getElementById("search");
 
-function render(list) {
-  output.innerHTML = "";
-  list.forEach(q => {
-    const div = document.createElement("div");
-    div.className = "question";
-    div.textContent = q;
-    output.appendChild(div);
+function show(arr) {
+  list.innerHTML = "";
+  arr.forEach(q => {
+    const d = document.createElement("div");
+    d.className = "question";
+    d.innerText = q;
+    list.appendChild(d);
   });
 }
 
-// Boshlang‘ich holat — hammasi chiqadi
-render(questions);
+// boshida hammasi chiqadi
+show(questions);
 
-input.addEventListener("input", function () {
-  const key = this.value.trim().toLowerCase();
+input.addEventListener("input", () => {
+  const key = input.value.toLowerCase().trim();
 
   if (key === "") {
-    render(questions);
+    show(questions); // tozalansa hammasi chiqadi
     return;
   }
 
@@ -1073,7 +1061,7 @@ input.addEventListener("input", function () {
     q.toLowerCase().includes(key)
   );
 
-  render(filtered);
+  show(filtered);
 });
 </script>
 
