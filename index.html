@@ -5,38 +5,23 @@
     <title>HEMIS</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Qidiruv input uslubi */
-        #searchInput {
-            padding: 8px;
-            width: 100%;
-            max-width: 400px;
-            font-size: 16px;
-            margin-bottom: 20px;
-            display: block;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .question {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
+        body { font-family: Arial; padding: 20px; background: #f9f9f9; }
+        .header { background: #0073e6; color: white; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; }
+        .content { max-width: 700px; margin: 20px auto; }
+        #searchInput { width: 100%; padding: 10px; margin-bottom: 20px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; }
+        .question { background: white; border: 1px solid #ddd; border-radius: 5px; padding: 10px; margin-bottom: 15px; }
+        .question:hover { box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
-<!-- Yuqori qism — HEMIS header -->
-<div class="header">
-    <div class="logo">hemis</div>
-</div>
+<div class="header">HEMIS</div>
 
-<!-- Testlar joyi -->
 <div class="content">
     <h2>Sessiya testlari</h2>
 
-    <!-- Qidiruv inputi qo‘shildi -->
-    <input type="text" id="searchInput" placeholder="Savolni qidir...">
+    <!-- Qidiruv inputi -->
+    <input type="text" id="searchInput" placeholder="Savol yoki javobni qidir...">
 
     <div class="question">
         <p><b>1. HTML nimani anglatadi?</b></p>
@@ -52,21 +37,27 @@
         <p>C) Server boshqarish</p>
     </div>
 
+    <div class="question">
+        <p><b>3. JavaScript nima uchun ishlatiladi?</b></p>
+        <p>A) Faqat matn yozish</p>
+        <p>B) Web sahifani interaktiv qilish ✅</p>
+        <p>C) Serverni o‘chirish</p>
+    </div>
+
     <h3>Test fayli</h3>
     <p>Faylni ko‘rish yoki yuklab olish uchun:</p>
     <a href="5-mavzu Axborot izlash tizimlarida indekslar.docx" target="_blank">5-mavzu</a>
-
 </div>
 
-<!-- Qidiruv JavaScript -->
 <script>
     const searchInput = document.getElementById('searchInput');
     const questions = document.querySelectorAll('.question');
 
     searchInput.addEventListener('input', function() {
-        const query = this.value.toLowerCase(); // kichik harfga o‘tkazamiz
+        const query = this.value.toLowerCase().trim(); // kichik harfga o‘tkazamiz va bo‘sh joylarni olib tashlaymiz
         questions.forEach(q => {
-            if (q.textContent.toLowerCase().includes(query)) {
+            const text = q.textContent.toLowerCase(); // savol va javoblar ham
+            if (text.includes(query)) {
                 q.style.display = ''; // mos kelsa ko‘rsat
             } else {
                 q.style.display = 'none'; // mos kelmasa yashir
