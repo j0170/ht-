@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+}
+
+/* Yuqori HEMIS header */
+.header {
+    background: #0b3c5d;
+    color: white;
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Testlar joyi */
+.content {
+    margin-top: 70px;
+    padding: 20px;
+}
+
+.question {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid #0b3c5d;
+}
