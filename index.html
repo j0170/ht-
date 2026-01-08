@@ -2,11 +2,15 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
-  <title>Qidiruv</title>
+  <title>Test qidiruv</title>
   <style>
     #allText {
-      white-space: pre-wrap; /* yangi qatorlarni saqlaydi */
+      white-space: pre-wrap;
       margin-top: 15px;
+      font-family: Arial, sans-serif;
+    }
+    mark {
+      background: yellow;
     }
   </style>
 </head>
@@ -14,7 +18,12 @@
 
 <h2>Sessiya testlari</h2>
 
-<input type="text" id="searchInput" placeholder="Qidir..." style="width:100%;padding:8px;">
+<input
+  type="text"
+  id="searchInput"
+  placeholder="Qidir..."
+  style="width:100%;padding:8px;"
+>
 
 <hr>
 
@@ -1026,24 +1035,33 @@ d) Daraxt chuqurligini aniqlash uchun
 
 </div>
 
+<p id="info" style="color:red;"></p>
+
 <script>
 const input = document.getElementById("searchInput");
-const content = document.getElementById("allText");
-const originalText = content.textContent;
+const box = document.getElementById("allText");
+const info = document.getElementById("info");
+const original = box.textContent;
 
 input.addEventListener("input", function () {
-  const q = this.value.trim().toLowerCase();
+  const q = this.value.trim();
 
   if (q === "") {
-    content.textContent = originalText;
+    box.textContent = original;
+    info.textContent = "";
     return;
   }
 
-  if (originalText.toLowerCase().includes(q)) {
-    content.textContent = originalText;
-  } else {
-    content.textContent = "Hech narsa topilmadi";
+  if (!original.toLowerCase().includes(q.toLowerCase())) {
+    box.textContent = original;
+    info.textContent = "Hech narsa topilmadi";
+    return;
   }
+
+  info.textContent = "";
+
+  const regex = new RegExp(q, "gi");
+  box.innerHTML = original.replace(regex, m => `<mark>${m}</mark>`);
 });
 </script>
 
