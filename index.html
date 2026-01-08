@@ -17,7 +17,6 @@
 
 <hr>
 
-<!-- HAMMA SAVOLLARNI BU YERGA JOYLAYSIZ -->
 <div id="data" style="display:none;">
 1.Axborot izlash jarayonida qanday asosiy bosqichlar mavjud?
 #a) Maqsadni belgilash
@@ -1030,37 +1029,38 @@ d) Daraxt chuqurligini aniqlash uchun
 
 <script>
 const raw = document.getElementById("data").innerText.trim();
-const questions = raw.split(/\n\s*\n/); // Bo‘sh qator bilan savollarni ajratish
+
+// bo‘sh qator bilan savollarni ajratish
+const questions = raw.split(/\r?\n\s*\r?\n/); // \r?\n qo‘shildi
+
 const list = document.getElementById("list");
 const input = document.getElementById("search");
 
-// Savollarni ekranga chiqaradigan funksiya
 function show(arr) {
   list.innerHTML = "";
   arr.forEach(q => {
-    const div = document.createElement("div");
-    div.className = "question";
-    div.innerText = q;
-    list.appendChild(div);
+    const d = document.createElement("div");
+    d.className = "question";
+    d.innerText = q;
+    list.appendChild(d);
   });
 }
 
-// Boshlanishida hammasi chiqadi
+// boshida hammasi chiqadi
 show(questions);
 
-// Qidiruv ishlashi
 input.addEventListener("input", () => {
-  const key = input.value.trim().toLowerCase();
-  
+  const key = input.value.toLowerCase().trim();
+
   if (key === "") {
-    show(questions); // qidiruv bo‘sh bo‘lsa hamma savol chiqadi
+    show(questions);
     return;
   }
-  
+
   const filtered = questions.filter(q =>
     q.toLowerCase().includes(key)
   );
-  
+
   show(filtered);
 });
 </script>
